@@ -7,6 +7,11 @@ public class Node {
         right = null;
         value = new String();
     }
+   @Override
+   public String toString() {
+       return value;
+   }
+
 
     public Node getLeft() {
         return left;
