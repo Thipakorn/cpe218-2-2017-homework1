@@ -4,21 +4,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-
 import javax.swing.ImageIcon;
-
-
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
-
 
 public class Homework1 extends JPanel
 		               implements TreeSelectionListener {
@@ -36,10 +29,10 @@ public class Homework1 extends JPanel
 		//Create a tree that allows one selection at a time.
 		tree = new JTree(top);
 		tree.getSelectionModel().setSelectionMode
-				(TreeSelectionModel.SINGLE_TREE_SELECTION); //เลือกได้อันเดียว
+				(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		//Listen for when the selection changes.
-		tree.addTreeSelectionListener(this);//จำว่าเราคลิกตัวไหนไป
+		tree.addTreeSelectionListener(this);
 
 
 		tree.putClientProperty("JTree.lineStyle","None");
@@ -52,11 +45,11 @@ public class Homework1 extends JPanel
 
 
 		//Create the scroll pane and add the tree to it.
-		JScrollPane treeView = new JScrollPane(tree);//หน้าต่างของมัน
+		JScrollPane treeView = new JScrollPane(tree);
 
 		//Create the HTML viewing pane.
 		htmlPane = new JEditorPane();
-		htmlPane.setEditable(false);//เเก้ค่าไม่ได้
+		htmlPane.setEditable(false);
 
 		JScrollPane htmlView = new JScrollPane(htmlPane);
 
@@ -66,7 +59,7 @@ public class Homework1 extends JPanel
 		splitPane.setBottomComponent(htmlView);
 
 		Dimension minimumSize = new Dimension(100, 50);
-		htmlView.setMinimumSize(minimumSize);//เเถบกลาง
+		htmlView.setMinimumSize(minimumSize);
 		treeView.setMinimumSize(minimumSize);
 		splitPane.setDividerLocation(100);
 		splitPane.setPreferredSize(new Dimension(500, 300));
@@ -96,7 +89,7 @@ public class Homework1 extends JPanel
 		String input = "251-*32*+";
 		// Begin of arguments input sample
 		if (args.length > 0) {
-
+        input = args[0];
 			// TODO: Implement your project here
 
 		}
@@ -137,16 +130,13 @@ public class Homework1 extends JPanel
 			tmp = n.getRight();
 			if (n.getValue().matches("[0-9]")) {
 				n.setRight(null);
-			} else {
-				if (n.getLeft().getValue().matches("[0-9]")) {
-					n.setRight(n.getLeft());
-					n.setLeft(n.getRight().getLeft());
-					n.getRight().setLeft(null);
-				} else {
-					n.setRight(n.getLeft());
-					n.setLeft(n.getRight().getLeft().getLeft());
-					n.getRight().getLeft().setLeft(null);
-				}
+			}
+			else {
+				Node tmp1=Node.findleft(n);
+				n.setRight(n.getLeft());
+				n.setLeft(tmp1.getLeft());
+				tmp1.setLeft(null);
+
 			}
 			if (tmp != null) tmp.setLeft(n);
 		}
@@ -194,18 +184,14 @@ public class Homework1 extends JPanel
 			text=text.substring(1,text.length()-1)+"="+calculater((Node)nodeInfo);
 
 		}
-
-
 		htmlPane.setText(text);
-
-
 	}
 	protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = Homework1.class.getResource(path);
         if (imgURL != null) {
          return new ImageIcon(imgURL);
 		} else {
-		System.err.println("Couldn't find file: " + path);
+		System.out.println("Couldn't find file: " + path);
 		return null;
 		}
 }

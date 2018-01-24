@@ -11,6 +11,11 @@ public class Node {
    public String toString() {
        return value;
    }
+   public static Node findleft(Node n){
+        if(Character.isDigit(n.getLeft().getValue().charAt(0)))
+            return n.getLeft();
+            return findleft(n.getLeft());
+    }
 
 
     public Node getLeft() {
